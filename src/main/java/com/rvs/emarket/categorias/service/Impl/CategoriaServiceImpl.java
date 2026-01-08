@@ -3,8 +3,8 @@ package com.rvs.emarket.categorias.service.Impl;
 
 import com.rvs.emarket.categorias.dto.CategoriaDTO;
 import com.rvs.emarket.categorias.entity.Categoria;
+import com.rvs.emarket.categorias.mapper.CategoriaMapper;
 import com.rvs.emarket.categorias.service.CategoriaService;
-import com.rvs.emarket.mapper.CategoriaMapper;
 import com.rvs.emarket.categorias.repository.CategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,8 +36,31 @@ public class CategoriaServiceImpl  implements CategoriaService {
 
     @Override
     public Page<CategoriaDTO> getAllCategorias(Pageable pageable) {
+
+        /*-----
         return categoriaRepository.findAll(pageable)
                 .map(categoriaMapper::toDTO);
+        ---*/
+
+        Page<Categoria> categoriaPage = categoriaRepository.findAll(pageable);
+
+        //logueo de la respuesta de la BD
+        // categoriaPage.forEach( c-> { System.out.println("Categoria de BD:" + c );});
+        // return categoriaPage.map(categoriaMapper::toDTO);
+
+        return categoriaPage.map(
+                c -> CategoriaDTO.builder()
+                        .idcategoria(c.getIdcategoria())
+                        .nombre(c.getNombre())
+                        .icono(c.getIcono())
+                        .imagen((c.getImagen()))
+                        .tituloLista(c.getTituloLista())
+                        .url(c.getUrl())
+                        .vistas(c.getVistas())
+                        .build()
+        );
+
+
     }
 
 

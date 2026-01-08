@@ -3,6 +3,7 @@ package com.rvs.emarket.categorias.controller;
 
 import com.rvs.emarket.categorias.dto.CategoriaDTO;
 import com.rvs.emarket.categorias.service.CategoriaService;
+import com.rvs.emarket.productos.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -20,6 +22,33 @@ import java.util.Optional;
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
+
+   //public CategoriaController (CategoriaService categoriaService){ this.categoriaService = categoriaService; }
+
+   /*----------
+
+   // Leer todos los productos → permiso: PRODUCT_READ
+    @GetMapping("/")
+    @PreAuthorize("hasAuthority('PRODUCT_READ')")
+    public List<Product> listar() {
+        return productService.findAll();
+   --- */
+
+    // Listar categorías con paginación y sorting  → permiso: CATEGORY_READ
+    @GetMapping("/")
+    @PreAuthorize("hasAuthority('PRODUCT_READ')")
+    public ResponseEntity<Page<CategoriaDTO>> getAllCategorias(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "idcategoria") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<CategoriaDTO> categorias = categoriaService.getAllCategorias(pageable);
+        return ResponseEntity.ok(categorias);
+    }
+
 
     // Crear nueva categoría
     @PostMapping
@@ -37,19 +66,6 @@ public class CategoriaController {
     }
 
 
-    // Listar categorías con paginación y sorting
-    @GetMapping
-    public ResponseEntity<Page<CategoriaDTO>> getAllCategorias(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "idcategoria") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction
-    ) {
-        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<CategoriaDTO> categorias = categoriaService.getAllCategorias(pageable);
-        return ResponseEntity.ok(categorias);
-    }
 
 
     // Actualizar categoría

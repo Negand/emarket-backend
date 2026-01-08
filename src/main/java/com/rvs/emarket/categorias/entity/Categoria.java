@@ -15,16 +15,16 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idcategoria")
-    private Integer id;
+    private Integer idcategoria;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "vistas")
-    private Integer vistas;
-
     @Column(name = "icono")
     private String icono;
+
+    @Column(name = "imagen")
+    private String imagen;
 
     @Column(name = "titulo_lista")
     private String tituloLista;
@@ -32,7 +32,6 @@ public class Categoria {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "imagen")
-    private String imagen;
-
+    @Column(name = "vistas")
+    private Integer vistas;
 }

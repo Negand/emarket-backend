@@ -1,4 +1,4 @@
-package com.rvs.emarket.mapper;
+package com.rvs.emarket.categorias.mapper;
 
 
 import com.rvs.emarket.categorias.dto.CategoriaDTO;

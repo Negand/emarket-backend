@@ -9,11 +9,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CategoriaDTO {
-    private Integer id;
+    private Integer idcategoria;
     private String nombre;
-    private Integer vistas;
     private String icono;
+    private String imagen;
     private String tituloLista;
     private String url;
-    private String imagen;
+    private Integer vistas;
 }
