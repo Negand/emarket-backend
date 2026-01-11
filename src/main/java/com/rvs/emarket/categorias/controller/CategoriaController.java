@@ -36,7 +36,7 @@ public class CategoriaController {
 
     // Listar categorías con paginación y sorting  → permiso: CATEGORY_READ
     @GetMapping("/")
-    @PreAuthorize("hasAuthority('PRODUCT_READ')")
+    @PreAuthorize("hasAuthority('CATEGORY_READ')")
     public ResponseEntity<Page<CategoriaDTO>> getAllCategorias(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -52,6 +52,7 @@ public class CategoriaController {
 
     // Crear nueva categoría
     @PostMapping
+    @PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     public ResponseEntity<CategoriaDTO> createCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         CategoriaDTO created = categoriaService.createCategoria(categoriaDTO);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
@@ -59,6 +60,7 @@ public class CategoriaController {
 
     // Obtener categoría por id
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('CATEGORY_READ')")
     public ResponseEntity<CategoriaDTO> getCategoriaById(@PathVariable Integer id) {
         Optional<CategoriaDTO> categoria = categoriaService.getCategoriaById(id);
         return categoria.map(ResponseEntity::ok)
@@ -66,10 +68,9 @@ public class CategoriaController {
     }
 
 
-
-
     // Actualizar categoría
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     public ResponseEntity<CategoriaDTO> updateCategoria(@PathVariable Integer id, @RequestBody CategoriaDTO categoriaDTO) {
         CategoriaDTO updated = categoriaService.updateCategoria(id, categoriaDTO);
         return ResponseEntity.ok(updated);
@@ -77,6 +78,7 @@ public class CategoriaController {
 
     // Eliminar categoría
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
         categoriaService.deleteCategoria(id);
         return ResponseEntity.noContent().build();

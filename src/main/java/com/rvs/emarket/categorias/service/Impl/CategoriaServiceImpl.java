@@ -23,9 +23,34 @@ public class CategoriaServiceImpl  implements CategoriaService {
 
     @Override
     public CategoriaDTO createCategoria(CategoriaDTO categoriaDTO) {
-        Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
+
+        //System.out.println("Categoria por Parametro:" + categoriaDTO );
+        Categoria categoria = new Categoria();
+        categoria.setNombre(categoriaDTO.getNombre()); // 🔥 ESTA LÍNEA FALTABA
+        categoria.setIcono(categoriaDTO.getIcono());
+        categoria.setImagen(categoriaDTO.getImagen());
+        categoria.setTituloLista(categoriaDTO.getTituloLista());
+        categoria.setUrl(categoriaDTO.getUrl());
+        categoria.setVistas(categoriaDTO.getVistas());
+
+        //Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
+        //return categoriaMapper.toDTO(saved);
+
         Categoria saved = categoriaRepository.save(categoria);
-        return categoriaMapper.toDTO(saved);
+        return toDto(saved);
+
+    }
+
+    private CategoriaDTO toDto(Categoria categoria) {
+        CategoriaDTO dto = new CategoriaDTO();
+        dto.setIdcategoria(categoria.getIdcategoria());
+        dto.setNombre(categoria.getNombre());
+        dto.setIcono(categoria.getIcono());
+        dto.setImagen(categoria.getImagen());
+        dto.setTituloLista(categoria.getTituloLista());
+        dto.setUrl(categoria.getUrl());
+        dto.setVistas(categoria.getVistas());
+        return dto;
     }
 
     @Override
