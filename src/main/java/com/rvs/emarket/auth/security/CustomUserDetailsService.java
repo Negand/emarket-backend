@@ -29,10 +29,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             user.getPermissions().add(new Permission(3L, "PRODUCT_UPDATE", ""));
             user.getPermissions().add(new Permission(4L, "PRODUCT_DELETE", ""));
         }
-
+        */
         System.out.println("Permisos de admin: " + user.getPermissions());
         System.out.println("Roles de admin: " + user.getRoles());
-        -----*/
+        //-----*/
 
         return new CustomUserDetails(user);
     }

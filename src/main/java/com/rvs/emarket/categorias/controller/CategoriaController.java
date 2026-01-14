@@ -3,7 +3,6 @@ package com.rvs.emarket.categorias.controller;
 
 import com.rvs.emarket.categorias.dto.CategoriaDTO;
 import com.rvs.emarket.categorias.service.CategoriaService;
-import com.rvs.emarket.productos.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,17 +21,6 @@ import java.util.Optional;
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
-
-   //public CategoriaController (CategoriaService categoriaService){ this.categoriaService = categoriaService; }
-
-   /*----------
-
-   // Leer todos los productos → permiso: PRODUCT_READ
-    @GetMapping("/")
-    @PreAuthorize("hasAuthority('PRODUCT_READ')")
-    public List<Product> listar() {
-        return productService.findAll();
-   --- */
 
     // Listar categorías con paginación y sorting  → permiso: CATEGORY_READ
     @GetMapping("/")
